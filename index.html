@@ -46,7 +46,6 @@
 
         .counter {
             font-family: 'Bebas Neue', sans-serif;
-            /* Adjusted clamp: Minimum dropped from 8rem to 4rem for mobile */
             font-size: clamp(4rem, 25vw, 25rem);
             line-height: 0.8;
             letter-spacing: -0.02em;
@@ -66,13 +65,17 @@
         section {
             position: relative;
             width: 100%;
+            /* CRITICAL FIX: Use dvh to account for mobile browser bars */
             min-height: 100vh;
+            min-height: 100dvh;
             overflow: hidden;
         }
         .container {
             position: relative;
             width: 100%;
+            /* CRITICAL FIX: Ensure container fits within visible area */
             min-height: 100vh;
+            min-height: 100dvh;
             padding: 4vw;
             padding-top: clamp(2rem, 8vw, 4vw);
             display: flex;
@@ -81,6 +84,17 @@
             gap: 1.5rem;
             transform-origin: bottom left;
             will-change: transform;
+        }
+
+        /* Mobile Layout Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                /* Add significant bottom padding on mobile to clear nav bars/home indicators */
+                padding-bottom: 120px; 
+            }
+            .cols {
+                gap: 2rem;
+            }
         }
 
         /* --- TYPOGRAPHY --- */
@@ -200,6 +214,40 @@
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
+
+        /* --- MOCKUP LINK ICON --- */
+        .mock-link {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: inherit;
+            text-decoration: none;
+            z-index: 200;
+            opacity: 0.8;
+            transition: transform 0.2s, opacity 0.2s;
+            cursor: pointer;
+        }
+        .mock-link:hover {
+            transform: scale(1.1);
+            opacity: 1;
+            background: currentColor;
+        }
+        .mock-link:hover svg {
+            stroke: #fff; /* Assuming hover makes bg opaque, text should be white (or inverted) */
+        }
+        /* Specific hover colors based on section logic */
+        .s3 .mock-link:hover svg { stroke: #fff; }
+        .s4 .mock-link:hover svg { stroke: #fff; }
+        .s5 .mock-link:hover svg { stroke: #fff; }
         
         .link-btn {
             display: inline-block;
@@ -330,6 +378,10 @@
                     </div>
                     <div style="flex: 1;">
                         <div class="mock-frame ui-coursify">
+                            <!-- ADDED LINK ICON -->
+                            <a href="https://hi-coursify.vercel.app" target="_blank" class="mock-link" aria-label="Visit Project">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
                             <div style="display:flex; gap:12px; height:100%;">
                                 <div style="width: 30%; height: 100%; background: currentColor; opacity: 0.2; border-radius: 6px;"></div>
                                 <div style="flex: 1; height: 100%; background: currentColor; opacity: 0.1; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div class="play"></div></div>
@@ -371,6 +423,10 @@
                     </div>
                     <div style="flex: 1;">
                         <div class="mock-frame ui-locked">
+                            <!-- ADDED LINK ICON -->
+                            <a href="https://drive.google.com/drive/folders/1r4UAF_Z7BtBqyo99fA9rI6bfRonWNj7t" target="_blank" class="mock-link" aria-label="View Demo">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
                             <div class="timer">25:00</div>
                             <div class="badge">Focus Locked</div>
                         </div>
@@ -406,6 +462,10 @@
                     </div>
                     <div style="flex: 1;">
                         <div class="mock-frame">
+                            <!-- ADDED LINK ICON -->
+                            <a href="https://freedtime.vercel.app" target="_blank" class="mock-link" aria-label="Open App">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
                             <div class="ui-grid">
                                 <div class="active"></div><div></div><div></div><div class="active"></div><div></div><div></div><div></div>
                                 <div></div><div class="active"></div><div></div><div></div><div></div><div class="active"></div><div></div>
@@ -415,210 +475,4 @@
                     </div>
                 </div>
                 <hr>
-                <div class="cols">
-                    <div>
-                        <p class="label">Problem</p>
-                        <p class="detail">Busy routines hide free hours. Time disappears unnoticed.</p>
-                    </div>
-                    <div>
-                        <p class="label">Solution</p>
-                        <p class="detail">Routine analysed. Free space revealed. Tasks aligned.</p>
-                    </div>
-                    <div>
-                        <p class="label">Result</p>
-                        <p class="detail">Clarity. Control. Consistency.</p>
-                        <a href="https://freedtime.vercel.app" target="_blank" class="link-btn">Open App ↗</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- S6: BEHIND THE CRAFT (DARK - BLUE) -->
-        <section class="s6">
-            <div class="container">
-                <p class="tag">06 — Behind The Craft</p>
-                <hr>
-                <div>
-                    <h2 class="big">Execution<br>Layer</h2>
-                </div>
-                <hr>
-                <div class="cols">
-                    <div>
-                        <p class="label">Languages</p>
-                        <p class="detail">C++, Python (Basics)</p>
-                    </div>
-                    <div>
-                        <p class="label">Frontend</p>
-                        <p class="detail">React, Vue, JavaScript, HTML, CSS, Vite</p>
-                    </div>
-                    <div>
-                        <p class="label">Backend & Systems</p>
-                        <p class="detail">Supabase, REST APIs, YouTube Data API, Web APIs</p>
-                    </div>
-                </div>
-                <div class="cols" style="margin-top: 2rem;">
-                    <div>
-                        <p class="label">Design & Analytics</p>
-                        <p class="detail">State-driven UI, Interaction Design, Data Visualization</p>
-                    </div>
-                    <div>
-                        <p class="label">Tools</p>
-                        <p class="detail">GitHub, Figma, Notion, Vercel</p>
-                    </div>
-                    <div>
-                        <p class="label">AI / No-Code</p>
-                        <p class="detail">Lovable, AI Studio, Bolt, Antigravity</p>
-                    </div>
-                </div>
-                <p class="sub" style="margin-top:auto; font-size: 1.2rem;">"Craft before hype."</p>
-            </div>
-        </section>
-
-        <!-- S7: CHARACTER (LIGHT - WHITE) -->
-        <section class="s7">
-            <div class="container">
-                <p class="tag">07 — Beyond Code</p>
-                <hr>
-                <div>
-                    <h2 class="big">Art<br>First<br>Always</h2>
-                </div>
-                <hr>
-                <div class="cols">
-                      <!-- SONG (New First Column) -->
-                    <div>
-                        <p class="label">Novice Lyricist</p>
-                        <p class="detail" style="margin-bottom:0.5rem">Official Release: "Finding You"</p>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/dJ7mu_ZNUKI" title="Finding You by Edmand Debbarma" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="label">Chess</p>
-                        <p class="detail">FIDE Rating 1517<br>National Player ×3 (2016–18)<br>Dhalai District Champion (2018)</p>
-                    </div>
-                    <div>
-                        <p class="label">Poetry</p>
-                        <p class="detail">IIT Kharagpur Spring Fest Finalist, 2024</p>
-                    </div>
-                    <div>
-                        <p class="label">Youth Parliament</p>
-                        <p class="detail">Zonal Rank 4 (2019)</p>
-                    </div>
-                    <div>
-                        <p class="label">Identity</p>
-                        <p class="detail">Generalist At Heart</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- S8: CONTACT (DARK - PURE BLACK) -->
-        <section class="s8">
-            <div class="container">
-                <p class="tag">08 — Contact</p>
-                <hr>
-                <div>
-                    <h2 class="big">Ready<br>To<br>Build</h2>
-                </div>
-                <hr>
-                <div class="cols">
-                    <div>
-                        <p class="label">Email</p>
-                        <a href="mailto:edofficial2020@gmail.com" class="detail" style="color:inherit; text-decoration:none;">edofficial2020@gmail.com</a>
-                    </div>
-                    <div>
-                        <p class="label">Phone</p>
-                        <p class="detail">+91 81190 26143</p>
-                    </div>
-                    <div>
-                        <p class="label">Location</p>
-                        <p class="detail">Agartala, India</p>
-                    </div>
-                </div>
-                <p class="sub" style="margin-top:auto; text-align:right;">"Let's Create"</p>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ENGINE SCRIPTS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script> 
-    <script>
-        // --- LOADER LOGIC ---
-        const counter = document.querySelector('.counter');
-        const loader = document.querySelector('.loader');
-        const revealText = document.querySelector('.reveal-text');
-
-        // Prevent scrolling during load
-        document.body.style.overflow = 'hidden';
-
-        let count = { val: 0 };
-        gsap.to(count, {
-            val: 100,
-            duration: 2.2,
-            ease: "power2.inOut",
-            onUpdate: () => {
-                counter.innerText = Math.floor(count.val);
-            },
-            onComplete: () => {
-                // Animate loader out
-                gsap.to(loader, {
-                    yPercent: -100,
-                    duration: 1.2,
-                    ease: "power4.inOut",
-                    onComplete: () => {
-                        loader.style.display = 'none';
-                        document.body.style.overflow = ''; // Enable scroll
-                    }
-                });
-
-                // Animate First Section Title
-                gsap.fromTo(revealText, 
-                    { y: 100, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.2 }
-                );
-            }
-        });
-
-        // --- SCROLL ENGINE ---
-        gsap.registerPlugin(ScrollTrigger);
-
-        const lenis = new Lenis();
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => lenis.raf(time * 1000));
-        gsap.ticker.lagSmoothing(0);
-
-        const sections = gsap.utils.toArray('section');
-
-        sections.forEach((section, i) => {
-            const container = section.querySelector('.container');
-
-            if (i > 0) {
-                gsap.set(container, { rotation: 30 });
-                gsap.to(container, {
-                    rotation: 0,
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top bottom',
-                        end: 'top 25%',
-                        scrub: true,
-                    }
-                });
-            }
-
-            if (i < sections.length - 1) {
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: 'bottom bottom',
-                    end: 'bottom top',
-                    pin: true,
-                    pinSpacing: false,
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+                <div class
