@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edmand Debbarma — Build To Impact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE ENGINE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::-webkit-scrollbar { display: none; }
+        html { scrollbar-width: none; }
+        body { font-family: 'Bricolage Grotesque', sans-serif; }
+
+        /* --- LOADER STYLES --- */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding: 4vw;
+            pointer-events: none;
+        }
+        
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            color: #fff;
+        }
+
+        .counter {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(8rem, 25vw, 30rem);
+            line-height: 0.8;
+            letter-spacing: -0.02em;
+        }
+        
+        .loader-text {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-right: 1vw;
+        }
+
+        /* --- MAIN LAYOUT --- */
+        section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 4vw;
+            padding-top: clamp(2rem, 8vw, 4vw);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.5rem;
+            transform-origin: bottom left;
+            will-change: transform;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .big { 
+            font-family: 'Bebas Neue', sans-serif; 
+            font-size: clamp(3.5rem, 13vw, 16rem); 
+            font-weight: 400; 
+            line-height: .8; 
+            text-transform: uppercase; 
+            letter-spacing: -.02em; 
+            margin-left: -0.05em;
+        }
+        
+        .sub { 
+            font-size: clamp(1.1rem, 2.2vw, 2rem); 
+            max-width: 40ch; 
+            line-height: 1.1; 
+            font-weight: 500; 
+            letter-spacing: -0.02em;
+        }
+        
+        .tag { 
+            font-size: .75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: .2em; 
+            opacity: 0.8;
+        }
+        
+        hr { border: none; border-top: 1px solid currentColor; opacity: .4; margin: 2vw 0; }
+        
+        .cols { display: flex; gap: 4vw; flex-wrap: wrap; align-items: flex-start; }
+        .cols > div { flex: 1; min-width: 240px; }
+        
+        .label { 
+            font-weight: 800; 
+            font-size: .75rem; 
+            text-transform: uppercase; 
+            letter-spacing: .1em; 
+            margin-bottom: .4rem; 
+            border-bottom: 2px solid currentColor; 
+            padding-bottom: 2px; 
+            display: inline-block; 
+            opacity: 0.8;
+        }
+        .detail { 
+            font-size: clamp(.9rem, 1.1vw, 1.1rem); 
+            line-height: 1.4; 
+            opacity: 1; 
+            font-weight: 600; 
+        }
+
+        /* --- COLORS (ALTERNATING RHYTHM) --- */
+        
+        /* S1: WHITE (Light) */
+        .s1 .container { background: #FFFFFF; color: #000; }
+        .s1 hr { border-color: #000; opacity: 0.2; }
+
+        /* S2: DEEP CHARCOAL (Dark) */
+        .s2 .container { background: #121212; color: #fff; } 
+        .s2 hr { border-color: #fff; opacity: 0.2; }
+
+        /* S3: ICE WHITE w/ BLUE TEXT (Light) - Coursify */
+        .s3 .container { background: #F0F4FF; color: #1640fc; }
+        .s3 hr { border-color: #1640fc; opacity: 0.2; }
+        .s3 .tag, .s3 .label { opacity: 0.7; }
+        .s3 .detail { color: #000; } 
+        .s3 .link-btn { color: #1640fc; border-color: #1640fc; }
+        .s3 .link-btn:hover { background: #1640fc; color: #fff; }
+
+        /* S4: ORANGE (Dark) - Locked-In */
+        .s4 .container { background: #ea5c2c; color: #000; }
+        .s4 hr { border-color: #000; opacity: 0.3; }
+        .s4 .link-btn { border-color: #000; color: #000; }
+        .s4 .link-btn:hover { background: #000; color: #fff; }
+
+        /* S5: SOFT GREY (Light) - Freedtime */
+        .s5 .container { background: #E5E5E5; color: #000; }
+        .s5 hr { border-color: #000; opacity: 0.2; }
+        .s5 .link-btn { border-color: #000; color: #000; }
+        .s5 .link-btn:hover { background: #000; color: #fff; }
+
+        /* S6: BLUE (Dark) - Execution */
+        .s6 .container { background: #1640fc; color: #fff; }
+        .s6 hr { border-color: #fff; opacity: 0.3; }
+
+        /* S7: WHITE (Light) - Character */
+        .s7 .container { background: #FFFFFF; color: #000; }
+        .s7 hr { border-color: #000; opacity: 0.2; }
+
+        /* S8: PURE BLACK (Dark) - Contact */
+        .s8 .container { background: #000000; color: #fff; }
+        .s8 hr { border-color: #fff; opacity: 0.3; }
+
+        /* --- UI HELPERS --- */
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+        .grid-item { border-left: 2px solid currentColor; padding-left: 1rem; }
+        .grid-item h3 { font-weight: 800; text-transform: uppercase; font-size: 1rem; margin-bottom: 0.2rem; }
+        .grid-item p { font-size: 0.9rem; opacity: 0.8; line-height: 1.3; }
+
+        .mock-frame {
+            width: 100%;
+            height: 35vh;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid currentColor;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .link-btn {
+            display: inline-block;
+            margin-top: 0.8rem;
+            padding: 8px 16px;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 100; /* CRITICAL FIX: Ensures clickability above other layers */
+            cursor: pointer;
+        }
+
+        /* UI Specifics */
+        .ui-coursify .play { width: 50px; height: 50px; border-radius: 50%; border: 3px solid currentColor; }
+        .ui-locked .timer { font-family: 'Bebas Neue'; font-size: 8rem; line-height: 0.9; opacity: 0.9; }
+        .ui-locked .badge { padding: 6px 16px; border: 2px solid currentColor; border-radius: 30px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-top: 1rem; }
+        .ui-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; height: 100%; width: 100%; }
+        .ui-grid div { background: currentColor; opacity: 0.15; border-radius: 4px; }
+        .ui-grid div.active { opacity: 0.6; }
+        
+        /* Youtube Embed */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            background: #eee;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Fix for links in stacked sections */
+        a {
+            pointer-events: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-text">Loading Experience</div>
+            <div class="counter">0</div>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- S1: IDENTITY (LIGHT) -->
+        <section class="s1">
+            <div class="container">
+                <p class="tag">01 — Identity</p>
+                <hr>
+                <div>
+                    <h1 class="big reveal-text" style="line-height: 0.85;">Think<br>Differently</h1>
+                </div>
+                <hr>
+                <div class="cols">
+                    <p class="sub">Building simple products that solve complex problems.</p>
+                    <div class="right" style="margin-top:auto; text-align: right;">
+                        <p class="label">Edmand Debbarma</p>
+                        <p class="detail">NIT Agartala '26<br>Product & Design Engineer<br><span style="opacity:0.6; font-weight:400; font-size:0.9em;">A generalist at heart</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S2: THE PHILOSOPHY (DARK - CHARCOAL) -->
+        <section class="s2">
+            <div class="container">
+                <p class="tag">02 — The Philosophy</p>
+                <hr>
+                <div>
+                    <h2 class="big">Solutions<br>That<br>Solve</h2>
+                </div>
+                <hr>
+                <div class="grid-gallery">
+                    <div class="grid-item">
+                        <h3>Coursify v0 — 2025</h3>
+                        <p>Turn YouTube playlists into your own courses</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Coursify v0.1 — 2026</h3>
+                        <p>Coming soon</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Locked-In v0 — 2026</h3>
+                        <p>Focus reinforcement app that forces you to focus</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Freedtime — 2025</h3>
+                        <p>(Made for NIT Agartala)<br>Find, analyse, and plan your free time in a busy college routine</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>SEEP — 2025</h3>
+                        <p>(Hackathon Reiterated Project)<br>Space exploration education platform with handmade and experiential games and simulations</p>
+                    </div>
+                </div>
+                <p class="sub" style="margin-top:auto; font-size: 1.5rem;">"Real World Products for Real World Problems."</p>
+            </div>
+        </section>
+
+        <!-- S3: COURSIFY (LIGHT - ICE BLUE TINT) -->
+        <section class="s3">
+            <div class="container">
+                <p class="tag">03 — Coursify</p>
+                <hr>
+                <div class="cols">
+                    <div style="flex: 1.2;">
+                        <h2 class="big" style="font-size: clamp(3rem, 11vw, 12rem);">YOUTUBE<br>WAS<br>A MESS</h2>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="mock-frame ui-coursify">
+                            <div style="display:flex; gap:12px; height:100%;">
+                                <div style="width: 30%; height: 100%; background: currentColor; opacity: 0.2; border-radius: 6px;"></div>
+                                <div style="flex: 1; height: 100%; background: currentColor; opacity: 0.1; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><div class="play"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="cols">
+                    <div>
+                        <p class="label">Problem</p>
+                        <p class="detail">YouTube is the world’s largest free learning library with 1billion+ learners. But: No course structure. No tracking or motivation. No system to finish what you start.</p>
+                    </div>
+                    <div>
+                        <p class="label">Solution</p>
+                        <p class="detail">Videos become lectures. Playlists become courses. Progress becomes analysis.<br>You do what you're good at: LEARNING.</p>
+                    </div>
+                    <div>
+                        <p class="label">Impact</p>
+                        <p class="detail">100+ courses created. 25+ creators onboarded. Live site.</p>
+                    </div>
+                    <div>
+                        <p class="label">Tech</p>
+                        <p class="detail">Real-time sync. Dynamic routing. Secure access.</p>
+                        <a href="https://hi-coursify.vercel.app" target="_blank" class="link-btn">Launch Coursify ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S4: BEHAVIOR REINFORCEMENT (DARK - ORANGE) -->
+        <section class="s4">
+            <div class="container">
+                <p class="tag">04 — Behavior Reinforcement</p>
+                <hr>
+                <div class="cols">
+                    <div style="flex: 1.5;">
+                        <h2 class="big" style="font-size: clamp(3rem, 10vw, 10rem);">Locked-In<br>V5.2<br>Webapp</h2>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="mock-frame ui-locked">
+                            <div class="timer">25:00</div>
+                            <div class="badge">Focus Locked</div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="cols">
+                    <div>
+                        <p class="label">Problem</p>
+                        <p class="detail">Focus is power. Everyone needs it. Students. Learners. Educators. Pioneers.<br>But focus is limited. And distraction is easy.</p>
+                    </div>
+                    <div>
+                        <p class="label">Solution</p>
+                        <p class="detail">You can’t beat distraction. But you can reinforce focus.</p>
+                    </div>
+                    <div>
+                        <p class="label">How</p>
+                        <p class="detail">Set a clear goal > Allot time > Focus is locked.<br>Distractions detected. Access restricted. Violations penalized.</p>
+                        <a href="https://drive.google.com/drive/folders/1r4UAF_Z7BtBqyo99fA9rI6bfRonWNj7t" target="_blank" class="link-btn">View Demo Assets ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S5: FREEDTIME (LIGHT - GREY) -->
+        <section class="s5">
+            <div class="container">
+                <p class="tag">05 — Freed Time</p>
+                <hr>
+                <div class="cols">
+                    <div style="flex: 1;">
+                        <h2 class="big">Time<br>Made<br>Visible</h2>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="mock-frame">
+                            <div class="ui-grid">
+                                <div class="active"></div><div></div><div></div><div class="active"></div><div></div><div></div><div></div>
+                                <div></div><div class="active"></div><div></div><div></div><div></div><div class="active"></div><div></div>
+                                <div class="active"></div><div></div><div></div><div></div><div></div><div></div><div class="active"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="cols">
+                    <div>
+                        <p class="label">Problem</p>
+                        <p class="detail">Busy routines hide free hours. Time disappears unnoticed.</p>
+                    </div>
+                    <div>
+                        <p class="label">Solution</p>
+                        <p class="detail">Routine analysed. Free space revealed. Tasks aligned.</p>
+                    </div>
+                    <div>
+                        <p class="label">Result</p>
+                        <p class="detail">Clarity. Control. Consistency.</p>
+                        <a href="https://freedtime.vercel.app" target="_blank" class="link-btn">Open App ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S6: BEHIND THE CRAFT (DARK - BLUE) -->
+        <section class="s6">
+            <div class="container">
+                <p class="tag">06 — Behind The Craft</p>
+                <hr>
+                <div>
+                    <h2 class="big">Execution<br>Layer</h2>
+                </div>
+                <hr>
+                <div class="cols">
+                    <div>
+                        <p class="label">Languages</p>
+                        <p class="detail">C++, Python (Basics)</p>
+                    </div>
+                    <div>
+                        <p class="label">Frontend</p>
+                        <p class="detail">React, Vue, JavaScript, HTML, CSS, Vite</p>
+                    </div>
+                    <div>
+                        <p class="label">Backend & Systems</p>
+                        <p class="detail">Supabase, REST APIs, YouTube Data API, Web APIs</p>
+                    </div>
+                </div>
+                <div class="cols" style="margin-top: 2rem;">
+                    <div>
+                        <p class="label">Design & Analytics</p>
+                        <p class="detail">State-driven UI, Interaction Design, Data Visualization</p>
+                    </div>
+                    <div>
+                        <p class="label">Tools</p>
+                        <p class="detail">GitHub, Figma, Notion, Vercel</p>
+                    </div>
+                    <div>
+                        <p class="label">AI / No-Code</p>
+                        <p class="detail">Lovable, AI Studio, Bolt, Antigravity</p>
+                    </div>
+                </div>
+                <p class="sub" style="margin-top:auto; font-size: 1.2rem;">"Craft before hype."</p>
+            </div>
+        </section>
+
+        <!-- S7: CHARACTER (LIGHT - WHITE) -->
+        <section class="s7">
+            <div class="container">
+                <p class="tag">07 — Beyond Code</p>
+                <hr>
+                <div>
+                    <h2 class="big">Art<br>First<br>Always</h2>
+                </div>
+                <hr>
+                <div class="cols">
+                     <!-- SONG (New First Column) -->
+                    <div>
+                        <p class="label">Novice Lyricist</p>
+                        <p class="detail" style="margin-bottom:0.5rem">Official Release: "Finding You"</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dJ7mu_ZNUKI" title="Finding You by Edmand Debbarma" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="label">Chess</p>
+                        <p class="detail">FIDE-rated 1517<br>National Player ×3 (2016–18)<br>Dhalai District Champion (2018)</p>
+                    </div>
+                    <div>
+                        <p class="label">Poetry</p>
+                        <p class="detail">IIT Kharagpur Spring Fest Finalist, 2024</p>
+                    </div>
+                    <div>
+                        <p class="label">Youth Parliament</p>
+                        <p class="detail">Zonal Rank 4 (2019)</p>
+                    </div>
+                    <div>
+                        <p class="label">Identity</p>
+                        <p class="detail">Generalist At Heart</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- S8: CONTACT (DARK - PURE BLACK) -->
+        <section class="s8">
+            <div class="container">
+                <p class="tag">08 — Contact</p>
+                <hr>
+                <div>
+                    <h2 class="big">Ready<br>To<br>Build</h2>
+                </div>
+                <hr>
+                <div class="cols">
+                    <div>
+                        <p class="label">Email</p>
+                        <a href="mailto:edofficial2020@gmail.com" class="detail" style="color:inherit; text-decoration:none;">edofficial2020@gmail.com</a>
+                    </div>
+                    <div>
+                        <p class="label">Phone</p>
+                        <p class="detail">+91 81190 26143</p>
+                    </div>
+                    <div>
+                        <p class="label">Location</p>
+                        <p class="detail">Agartala, India</p>
+                    </div>
+                </div>
+                <p class="sub" style="margin-top:auto; text-align:right;">"Let’s build what lasts."</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ENGINE SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script> 
+    <script>
+        // --- LOADER LOGIC ---
+        const counter = document.querySelector('.counter');
+        const loader = document.querySelector('.loader');
+        const revealText = document.querySelector('.reveal-text');
+
+        // Prevent scrolling during load
+        document.body.style.overflow = 'hidden';
+
+        let count = { val: 0 };
+        gsap.to(count, {
+            val: 100,
+            duration: 2.2,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                counter.innerText = Math.floor(count.val);
+            },
+            onComplete: () => {
+                // Animate loader out
+                gsap.to(loader, {
+                    yPercent: -100,
+                    duration: 1.2,
+                    ease: "power4.inOut",
+                    onComplete: () => {
+                        loader.style.display = 'none';
+                        document.body.style.overflow = ''; // Enable scroll
+                    }
+                });
+
+                // Animate First Section Title
+                gsap.fromTo(revealText, 
+                    { y: 100, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.2 }
+                );
+            }
+        });
+
+        // --- SCROLL ENGINE ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const lenis = new Lenis();
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        const sections = gsap.utils.toArray('section');
+
+        sections.forEach((section, i) => {
+            const container = section.querySelector('.container');
+
+            if (i > 0) {
+                gsap.set(container, { rotation: 30 });
+                gsap.to(container, {
+                    rotation: 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top bottom',
+                        end: 'top 25%',
+                        scrub: true,
+                    }
+                });
+            }
+
+            if (i < sections.length - 1) {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'bottom bottom',
+                    end: 'bottom top',
+                    pin: true,
+                    pinSpacing: false,
+                });
+            }
+        });
+    </script>
+</body>
+</html>
