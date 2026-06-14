@@ -13,14 +13,14 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Edmand Debbarma — Product & Design Engineer">
     <meta property="og:description" content="Proof of work: Coursify, Locked-In, Freedtime. Building simple products that solve complex problems.">
-    <meta property="og:url" content="https://latest-portfolio.vercel.app/">
-    <meta property="og:image" content="https://latest-portfolio.vercel.app/og-image.png">
+    <meta property="og:url" content="https://edmand-portfolio.vercel.app/">
+    <meta property="og:image" content="https://edmand-portfolio.vercel.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Edmand Debbarma — Product & Design Engineer">
     <meta name="twitter:description" content="Proof of work: Coursify, Locked-In, Freedtime. Building simple products that solve complex problems.">
-    <meta name="twitter:image" content="https://latest-portfolio.vercel.app/og-image.png">
+    <meta name="twitter:image" content="https://edmand-portfolio.vercel.app/og-image.png">
 
     <!-- FAVICON -->
     <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -303,25 +303,24 @@
         .mock-shot:hover .mock-link { background: currentColor; transform: scale(1.1); }
         .mock-shot:hover .mock-link svg { stroke: #fff; }
 
-        /* --- RESPONSIVE DEVICE SHOWCASE (desktop browser + phone = multi-layout work) --- */
+        /* --- RESPONSIVE DEVICE SHOWCASE: browser + a real-looking phone, side-by-side (both fully visible) --- */
         .device-combo {
-            position: relative;
-            display: block;
+            display: flex;
+            align-items: flex-end;   /* sit both on the same baseline; the taller phone stands up */
+            gap: 5%;
             width: 100%;
             color: inherit;
             text-decoration: none;
-            padding-right: 9%;   /* reserve room for the phone overhang */
-            padding-bottom: 10px;
             cursor: pointer;
         }
         .device-combo .browser {
-            display: block;
-            width: 100%;
+            flex: 1 1 auto;          /* the desktop shot stays the hero, takes the remaining width */
+            min-width: 0;
             border-radius: 12px;
             overflow: hidden;
             background: #fff;
-            border: 1px solid rgba(31,107,153,0.25);
-            box-shadow: 0 22px 50px rgba(0,0,0,0.14);
+            border: 1px solid rgba(0,0,0,0.12);
+            box-shadow: 0 22px 50px rgba(0,0,0,0.16);
             transition: transform 0.35s ease;
         }
         .device-combo .browser-bar {
@@ -331,52 +330,53 @@
         }
         .device-combo .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #cfd8e3; }
         .device-combo .browser img { display: block; width: 100%; height: auto; }
+
+        /* Phone: a proper tall device, fully visible next to the browser (no overlap) */
         .device-combo .phone {
-            position: absolute;
-            right: 0; bottom: 0;
-            width: 27%;
-            padding: 6px;                 /* the metal body thickness */
-            border-radius: 24px;
-            /* brushed-metal body with a lit edge */
-            background: linear-gradient(150deg, #3a3d44 0%, #191b20 46%, #0b0c0f 100%);
+            flex: 0 0 26%;
+            position: relative;
+            padding: 0.5rem 0.45rem;     /* slim metal rim */
+            border-radius: 1.6rem;
+            background: linear-gradient(145deg, #44474e 0%, #1d1f24 42%, #0a0b0e 100%);
             box-shadow:
-                0 26px 50px rgba(0,0,0,0.40),         /* drop shadow = floats above page */
-                inset 0 0 0 1.5px rgba(255,255,255,0.12), /* polished rim highlight */
-                inset 0 -2px 6px rgba(0,0,0,0.55);
+                0 24px 44px rgba(0,0,0,0.42),
+                inset 0 0 0 1px rgba(255,255,255,0.16),  /* polished rim highlight */
+                inset 0 -3px 7px rgba(0,0,0,0.55);
             transition: transform 0.35s ease;
         }
         .device-combo .phone .screen {
             position: relative;
             display: block;
-            border-radius: 18px;
+            border-radius: 1.2rem;
             overflow: hidden;
             background: #fff;
-            box-shadow: 0 0 0 1px rgba(0,0,0,0.45);   /* thin gap between glass and rim */
         }
-        /* Phone screen follows the screenshot's own ratio — full mobile UI, no crop, no distortion */
         .device-combo .phone .screen img { display: block; width: 100%; height: auto; }
-        /* camera punch-hole */
+        /* dynamic-island pill (modern phone cue) */
         .device-combo .phone .screen::before {
             content: ""; position: absolute; z-index: 4;
-            top: 7px; left: 50%; transform: translateX(-50%);
-            width: 7px; height: 7px; border-radius: 50%;
+            top: 6px; left: 50%; transform: translateX(-50%);
+            width: 30%; height: 11px; border-radius: 99px;
             background: #08090b;
-            box-shadow: 0 0 0 1.5px rgba(255,255,255,0.10);
         }
         /* glossy glass reflection */
         .device-combo .phone .screen::after {
             content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
-            background: linear-gradient(125deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 16%, rgba(255,255,255,0) 38%);
+            background: linear-gradient(125deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 16%, rgba(255,255,255,0) 38%);
         }
         /* side buttons */
         .device-combo .phone .btn-l,
-        .device-combo .phone .btn-r {
-            position: absolute; background: #0b0c0f; border-radius: 2px;
-        }
-        .device-combo .phone .btn-l { left: -2px; top: 30%; width: 2px; height: 7%; }
-        .device-combo .phone .btn-r { right: -2px; top: 22%; width: 2px; height: 11%; }
+        .device-combo .phone .btn-r { position: absolute; background: #0b0c0f; border-radius: 2px; }
+        .device-combo .phone .btn-l { left: -2px; top: 26%; width: 2px; height: 9%; }
+        .device-combo .phone .btn-r { right: -2px; top: 19%; width: 2px; height: 13%; }
         .device-combo:hover .browser { transform: translateY(-4px); }
-        .device-combo:hover .phone { transform: translateY(-9px); }
+        .device-combo:hover .phone { transform: translateY(-4px); }
+
+        /* On the narrowest screens, give the phone a touch more room */
+        @media (max-width: 480px) {
+            .device-combo { gap: 4%; }
+            .device-combo .phone { flex-basis: 30%; }
+        }
         .device-tag {
             display: inline-block;
             margin-top: 1rem;
@@ -575,7 +575,7 @@
                             </span>
                             <!-- Phone frame (real mobile capture of the same app) -->
                             <span class="phone">
-                                <span class="screen"><img src="assets/coursify-mobile.png" alt="Coursify on mobile" loading="lazy" width="960" height="1340"></span>
+                                <span class="screen"><img src="assets/coursify-mobile.png" alt="Coursify on mobile" loading="lazy" width="960" height="2000"></span>
                                 <i class="btn-l"></i><i class="btn-r"></i>
                             </span>
                         </a>
@@ -623,7 +623,7 @@
                             </span>
                             <!-- Phone frame (real mobile capture of the same app) -->
                             <span class="phone">
-                                <span class="screen"><img src="assets/freedtime-mobile.png" alt="Freedtime on mobile" loading="lazy" width="960" height="1340"></span>
+                                <span class="screen"><img src="assets/freedtime-mobile.png" alt="Freedtime on mobile" loading="lazy" width="960" height="2000"></span>
                                 <i class="btn-l"></i><i class="btn-r"></i>
                             </span>
                         </a>
