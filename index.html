@@ -6,20 +6,20 @@
     <title>PROOF OF WORK by EDMAND</title>
 
     <!-- SEO & SHARE PREVIEW -->
-    <meta name="description" content="Edmand Debbarma — Product & Design Engineer (NIT Agartala '26). Building simple products that solve complex problems: Coursify, Locked-In, Freedtime and more.">
+    <meta name="description" content="Edmand Debbarma — Product & Design Engineer (NIT Agartala '26). Building simple products that solve complex problems: Coursify, Gaffer Arena, Freedtime and more.">
     <meta name="theme-color" content="#000000">
     <!-- ⚠ VERIFY: these use the default Vercel domain for this repo. After deploying, confirm your
          actual production URL in the Vercel dashboard (Project → Domains) and update all 3 below if it differs. -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Edmand Debbarma — Product & Design Engineer">
-    <meta property="og:description" content="Proof of work: Coursify, Locked-In, Freedtime. Building simple products that solve complex problems.">
+    <meta property="og:description" content="Proof of work: Coursify, Gaffer Arena, Freedtime. Building simple products that solve complex problems.">
     <meta property="og:url" content="https://edmand-portfolio.vercel.app/">
     <meta property="og:image" content="https://edmand-portfolio.vercel.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Edmand Debbarma — Product & Design Engineer">
-    <meta name="twitter:description" content="Proof of work: Coursify, Locked-In, Freedtime. Building simple products that solve complex problems.">
+    <meta name="twitter:description" content="Proof of work: Coursify, Gaffer Arena, Freedtime. Building simple products that solve complex problems.">
     <meta name="twitter:image" content="https://edmand-portfolio.vercel.app/og-image.png">
 
     <!-- FAVICON -->
@@ -64,7 +64,7 @@
                 padding: 2rem; /* Safer padding for mobile bezels */
             }
         }
-        
+
         .loader-content {
             display: flex;
             flex-direction: column;
@@ -79,7 +79,7 @@
             line-height: 0.8;
             letter-spacing: -0.02em;
         }
-        
+
         .loader-text {
             font-family: 'Bricolage Grotesque', sans-serif;
             text-transform: uppercase;
@@ -132,63 +132,78 @@
         }
 
         /* --- TYPOGRAPHY --- */
-        .big { 
-            font-family: 'Bebas Neue', sans-serif; 
-            font-size: clamp(3.5rem, 13vw, 16rem); 
-            font-weight: 400; 
-            line-height: .8; 
-            text-transform: uppercase; 
-            letter-spacing: -.02em; 
+        .big {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 13vw, 16rem);
+            font-weight: 400;
+            line-height: .8;
+            text-transform: uppercase;
+            letter-spacing: -.02em;
             margin-left: -0.05em;
         }
-        
-        .sub { 
-            font-size: clamp(1.1rem, 2.2vw, 2rem); 
-            max-width: 40ch; 
-            line-height: 1.1; 
-            font-weight: 500; 
+
+        .sub {
+            font-size: clamp(1.1rem, 2.2vw, 2rem);
+            max-width: 40ch;
+            line-height: 1.1;
+            font-weight: 500;
             letter-spacing: -0.02em;
         }
-        
-        .tag { 
-            font-size: .75rem; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: .2em; 
+
+        .tag {
+            font-size: .75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .2em;
             opacity: 0.8;
         }
-        
-        hr { border: none; border-top: 1px solid currentColor; opacity: .4; margin: 2vw 0; }
-        
-        .cols { display: flex; gap: 4vw; flex-wrap: wrap; align-items: flex-start; }
-        .cols > div { flex: 1; min-width: 240px; }
-        
-        .label { 
-            font-weight: 800; 
-            font-size: .75rem; 
-            text-transform: uppercase; 
-            letter-spacing: .1em; 
-            margin-bottom: .4rem; 
-            border-bottom: 2px solid currentColor; 
-            padding-bottom: 2px; 
-            display: inline-block; 
-            opacity: 0.8;
-        }
-        .detail { 
-            font-size: clamp(.9rem, 1.1vw, 1.1rem); 
-            line-height: 1.4; 
-            opacity: 1; 
-            font-weight: 600; 
+        .tag span { opacity: 0.6; font-weight: 600; margin-left: 0.6em; }
+
+        .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .chip {
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            padding: .35em .9em;
+            border: 1px solid currentColor;
+            border-radius: 999px;
+            opacity: 0.85;
         }
 
+        hr { border: none; border-top: 1px solid currentColor; opacity: .4; margin: 2vw 0; }
+
+        .cols { display: flex; gap: 4vw; flex-wrap: wrap; align-items: flex-start; }
+        .cols > div { flex: 1; min-width: 240px; }
+
+        .label {
+            font-weight: 800;
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: .4rem;
+            border-bottom: 2px solid currentColor;
+            padding-bottom: 2px;
+            display: inline-block;
+            opacity: 0.8;
+        }
+        .detail {
+            font-size: clamp(.9rem, 1.1vw, 1.1rem);
+            line-height: 1.4;
+            opacity: 1;
+            font-weight: 600;
+        }
+        ul.detail { padding-left: 1.1em; margin-top: 0.3em; }
+        .detail li { margin-bottom: 0.3em; }
+
         /* --- COLORS (ALTERNATING RHYTHM) --- */
-        
+
         /* S1: WHITE (Light) */
         .s1 .container { background: #FFFFFF; color: #000; }
         .s1 hr { border-color: #000; opacity: 0.2; }
 
         /* S2: DEEP CHARCOAL (Dark) */
-        .s2 .container { background: #121212; color: #fff; } 
+        .s2 .container { background: #121212; color: #fff; }
         .s2 hr { border-color: #fff; opacity: 0.2; }
 
         /* S3: WHITE w/ BRAND-GREEN GRADIENT (Light) - Coursify (matches the product) */
@@ -211,12 +226,13 @@
         .s3 .link-btn:hover { background: #22A852; color: #fff; border-color: #22A852; }
         .s3 .mock-link:hover svg { stroke: #fff; }
 
-        /* S4: WHITE (Light) - Locked-In — white keeps the light/dark/light rhythm */
-        .s4 .container { background: #FFFFFF; color: #000; }
-        .s4 hr { border-color: #000; opacity: 0.2; }
-        .s4 .link-btn { border-color: #000; color: #000; }
-        .s4 .link-btn:hover { background: #000; color: #fff; }
-        .s4 .mock-frame { background: #F4F4F4; } /* light card so the timer reads on white */
+        /* S4: BLACK w/ SIGNAL-YELLOW (Dark) - Gaffer Arena (matches the product's black + yellow branding) */
+        .s4 .container { background: #05090D; color: #FFFF00; }
+        .s4 hr { border-color: #fff; opacity: 0.18; }
+        .s4 .tag, .s4 .label { opacity: 1; }
+        .s4 .big { color: #fff; }
+        .s4 .detail { color: #AAB3C2; }
+        .s4 .link-btn:hover { background: #FFFF00; color: #05090D; border-color: #FFFF00; }
 
         /* S5: BRAND BLUE (Dark) - Freedtime — blue bg keeps the dark/light/dark rhythm */
         .s5 .container {
@@ -352,13 +368,6 @@
             background: #fff;
         }
         .device-combo .phone .screen img { display: block; width: 100%; height: auto; }
-        /* dynamic-island pill (modern phone cue) */
-        .device-combo .phone .screen::before {
-            content: ""; position: absolute; z-index: 4;
-            top: 6px; left: 50%; transform: translateX(-50%);
-            width: 30%; height: 11px; border-radius: 99px;
-            background: #08090b;
-        }
         /* glossy glass reflection */
         .device-combo .phone .screen::after {
             content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
@@ -416,9 +425,8 @@
         }
         /* Specific hover colors based on section logic */
         .s3 .mock-link:hover svg { stroke: #fff; }
-        .s4 .mock-link:hover svg { stroke: #fff; }
         .s5 .mock-link:hover svg { stroke: #fff; }
-        
+
         .link-btn {
             display: inline-block;
             margin-top: 0.8rem;
@@ -438,12 +446,10 @@
 
         /* UI Specifics */
         .ui-coursify .play { width: 50px; height: 50px; border-radius: 50%; border: 3px solid currentColor; }
-        .ui-locked .timer { font-family: 'Bebas Neue'; font-size: clamp(3.5rem, 14vw, 8rem); line-height: 0.9; opacity: 0.9; }
-        .ui-locked .badge { padding: 6px 16px; border: 2px solid currentColor; border-radius: 30px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-top: 1rem; }
         .ui-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; height: 100%; width: 100%; }
         .ui-grid div { background: currentColor; opacity: 0.15; border-radius: 4px; }
         .ui-grid div.active { opacity: 0.6; }
-        
+
         /* Youtube Embed */
         .video-container {
             position: relative;
@@ -533,24 +539,16 @@
                 <hr>
                 <div class="grid-gallery">
                     <div class="grid-item">
-                        <h3>Coursify v0 — 2025</h3>
-                        <p>Turn YouTube playlists into your own courses</p>
+                        <h3>Gaffer Arena — 2026</h3>
+                        <p>(Client project) Live football tactics game launched for the 2026 World Cup</p>
                     </div>
                     <div class="grid-item">
-                        <h3>Coursify v0.1 — 2026</h3>
-                        <p>Coming soon</p>
+                        <h3>Coursify v2.1 — 2026</h3>
+                        <p>(Live) Turn YouTube playlists into your own courses</p>
                     </div>
                     <div class="grid-item">
                         <h3>Freedtime — 2025</h3>
                         <p>(Made for NIT Agartala)<br>Find, analyse, and plan your free time in a busy college routine</p>
-                    </div>
-                    <div class="grid-item">
-                        <h3>Locked-In v0 — 2026</h3>
-                        <p>Focus reinforcement app that forces you to focus</p>
-                    </div>
-                    <div class="grid-item">
-                        <h3>SEEP — 2025</h3>
-                        <p>(Hackathon Reiterated Project)<br>Space exploration education platform with handmade and experiential games and simulations</p>
                     </div>
                 </div>
                 <p class="sub" style="margin-top:auto; font-size: 1.5rem;">"Real World Products for Real World Problems."</p>
@@ -560,7 +558,7 @@
         <!-- S3: COURSIFY (LIGHT - ICE BLUE TINT) -->
         <section class="s3">
             <div class="container">
-                <p class="tag">03 — Coursify</p>
+                <p class="tag">03 — Coursify <span>Flagship Product</span></p>
                 <hr>
                 <div class="cols">
                     <div style="flex: 1.2;">
@@ -605,10 +603,70 @@
             </div>
         </section>
 
-        <!-- 04: FREEDTIME (DARK - BLUE GRID) — second project -->
+        <!-- 04: GAFFER ARENA (DARK - BLACK + SIGNAL YELLOW) — client project -->
+        <section class="s4">
+            <div class="container">
+                <p class="tag">04 — Gaffer Arena <span>Featured Client Work</span></p>
+                <hr>
+                <div class="cols">
+                    <div style="flex: 1.2;">
+                        <h2 class="big" style="font-size: clamp(3rem, 10vw, 11rem);">LIVE<br>FOOTBALL<br>TACTICS GAME</h2>
+                        <div class="chips">
+                            <span class="chip">Football</span>
+                            <span class="chip">Tactics</span>
+                            <span class="chip">Game</span>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <a href="https://gafferarena.com" target="_blank" rel="noopener noreferrer" class="device-combo" aria-label="Visit Gaffer Arena — responsive on desktop and mobile (opens in a new tab)">
+                            <!-- Desktop browser frame -->
+                            <span class="browser">
+                                <span class="browser-bar"><i></i><i></i><i></i></span>
+                                <img src="assets/gafferarena-hero.png" alt="Gaffer Arena on desktop" loading="lazy" width="1686" height="976">
+                            </span>
+                            <!-- Phone frame (real mobile capture of the same app) -->
+                            <span class="phone">
+                                <span class="screen"><img src="assets/gafferarena-mobile.png" alt="Gaffer Arena on mobile" loading="lazy" width="722" height="1600"></span>
+                                <i class="btn-l"></i><i class="btn-r"></i>
+                            </span>
+                        </a>
+                        <span class="device-tag">Responsive build <span>· desktop + mobile</span></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="cols">
+                    <div>
+                        <p class="label">Brief</p>
+                        <p class="detail">A live football tactics game that lets you make tactical calls based on live match events. Launched for the 2026 World Cup.</p>
+                    </div>
+                    <div>
+                        <p class="label">Contribution</p>
+                        <p class="detail">Designed the visual identity from scratch, then built the app's core features end-to-end, from idea to ship.</p>
+                    </div>
+                    <div>
+                        <p class="label">Features</p>
+                        <ul class="detail">
+                            <li>Live match scoring & leaderboard for players.</li>
+                            <li>Discord-native bot for Gaffer Arena.</li>
+                            <li>AI-powered match scenarios with built-in multi-language support.</li>
+                            <li>Gamified ELO progression with streaks & XP.</li>
+                            <li>No-code admin dashboard to manage players.</li>
+                            <li>Viral shareable cards for increased retention.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="label">Tech</p>
+                        <p class="detail">Next.js, TypeScript, Supabase, Vercel, Sportmonks API.</p>
+                        <a href="https://gafferarena.com" target="_blank" class="link-btn">Visit Gaffer Arena ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05: FREEDTIME (DARK - BLUE GRID) — third project -->
         <section class="s5">
             <div class="container">
-                <p class="tag">04 — Freed Time</p>
+                <p class="tag">05 — Freed Time</p>
                 <hr>
                 <div class="cols">
                     <div style="flex: 1;">
@@ -644,45 +702,6 @@
                         <p class="label">Result</p>
                         <p class="detail">Clarity. Control. Consistency.</p>
                         <a href="https://freedtime.vercel.app" target="_blank" class="link-btn">Open App ↗</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 05: BEHAVIOR REINFORCEMENT (LIGHT - WHITE) — third project -->
-        <section class="s4">
-            <div class="container">
-                <p class="tag">05 — Behavior Reinforcement</p>
-                <hr>
-                <div class="cols">
-                    <div style="flex: 1.5;">
-                        <h2 class="big" style="font-size: clamp(3rem, 10vw, 10rem);">Locked-In<br>V5.2<br>Webapp</h2>
-                    </div>
-                    <div style="flex: 1;">
-                        <div class="mock-frame ui-locked">
-                            <!-- ADDED LINK ICON -->
-                            <a href="https://drive.google.com/drive/folders/1r4UAF_Z7BtBqyo99fA9rI6bfRonWNj7t" target="_blank" class="mock-link" aria-label="View Demo">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                            </a>
-                            <div class="timer">25:00</div>
-                            <div class="badge">Focus Locked</div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="cols">
-                    <div>
-                        <p class="label">Problem</p>
-                        <p class="detail">Focus is power. Everyone needs it. Students. Learners. Educators. Pioneers.<br>But focus is limited. And distraction is easy.</p>
-                    </div>
-                    <div>
-                        <p class="label">Solution</p>
-                        <p class="detail">You can’t beat distraction. But you can reinforce focus.</p>
-                    </div>
-                    <div>
-                        <p class="label">How</p>
-                        <p class="detail">Set a clear goal > Allot time > Focus is locked.<br>Distractions detected. Access restricted. Violations penalized.</p>
-                        <a href="https://drive.google.com/drive/folders/1r4UAF_Z7BtBqyo99fA9rI6bfRonWNj7t" target="_blank" class="link-btn">View Demo Assets ↗</a>
                     </div>
                 </div>
             </div>
@@ -750,7 +769,7 @@
                     </div>
                     <div>
                         <p class="label">Chess</p>
-                        <p class="detail">FIDE Rating 1517<br>National Player ×3 (2016–18)<br>Dhalai District Champion (2018)</p>
+                        <p class="detail">FIDE Rating 1459<br>National Player ×3 (2016–18)<br>Dhalai District Champion (2018)</p>
                     </div>
                     <div>
                         <p class="label">Poetry</p>
@@ -800,7 +819,7 @@
     <!-- ENGINE SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script> 
+    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
     <script>
         // --- CONTACT EMAIL (assembled at runtime to avoid scraper harvesting) ---
         (function () {
