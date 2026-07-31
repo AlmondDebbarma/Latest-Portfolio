@@ -874,11 +874,18 @@
             gsap.ticker.lagSmoothing(0);
 
             // Build the section pin + rotation animations
+            // ROOT CAUSE OF MOBILE BREAKAGE: the 30deg rotation pivots around the container's
+            // bottom-left corner. On wide/short desktop sections that sweep is subtle, but on
+            // narrow/tall mobile sections the same rotation swings the top edge far outside the
+            // section bounds, smearing the incoming section across the still-pinned previous one.
+            // Below the same 768px breakpoint used elsewhere in this file, skip the pin + rotate
+            // stacking effect entirely and let sections scroll normally in flow.
+            const isCompactViewport = window.matchMedia('(max-width: 768px)').matches;
             const sections = gsap.utils.toArray('section');
             sections.forEach((section, i) => {
                 const container = section.querySelector('.container');
 
-                if (i > 0) {
+                if (i > 0 && !isCompactViewport) {
                     gsap.set(container, { rotation: 30 });
                     gsap.to(container, {
                         rotation: 0,
@@ -892,7 +899,7 @@
                     });
                 }
 
-                if (i < sections.length - 1) {
+                if (i < sections.length - 1 && !isCompactViewport) {
                     ScrollTrigger.create({
                         trigger: section,
                         start: 'bottom bottom',
