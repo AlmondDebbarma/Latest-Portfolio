@@ -875,21 +875,30 @@
 
             // Build the section pin + rotation animations
             // The pin+stack transition (a section holds still while the next one slides up
-            // over it) is intentional on every viewport. What broke on mobile was the fixed
-            // 30deg rotation: below 768px the `.cols` rows (see that media query) stack to
-            // full width instead of sitting side-by-side, so sections run 2-3x taller than
-            // one viewport there. Rotating a box that tall by the same fixed angle around its
-            // bottom-left corner sweeps a proportionally huge arc, smearing the incoming
-            // section across the still-pinned previous one. Keep the effect everywhere, just
-            // use a much smaller angle on compact viewports so the sweep stays contained.
-            const isCompactViewport = window.matchMedia('(max-width: 768px)').matches;
-            const revealRotationDeg = isCompactViewport ? 8 : 30;
+            // over it) is intentional on every viewport, and the 30deg swing is tuned for a
+            // section that's roughly one viewport tall -- that's what gives the reveal its
+            // "page turning in" drama. The break was never the angle itself: some sections
+            // render far taller than one viewport (below 768px the `.cols` rows stack to full
+            // width instead of sitting side-by-side), and rotating a much taller box by that
+            // same fixed angle around its bottom-left corner sweeps a proportionally huge arc,
+            // smearing it across the still-pinned section behind it. A flat smaller angle for
+            // all mobile sections (tried previously) fixed the break but flattened sections
+            // that never needed taming. Instead, measure each section's real rendered height
+            // and only scale the angle down by how much taller than one viewport it actually
+            // is -- short sections (desktop, and simple mobile ones) keep the full 30deg
+            // drama; only the genuinely tall, stacked ones get tamed, in proportion.
+            const viewportDiagonal = Math.hypot(window.innerWidth, window.innerHeight);
+            const tunedArc = viewportDiagonal * (30 * Math.PI / 180); // arc a 1-viewport-tall section sweeps at the original 30deg
             const sections = gsap.utils.toArray('section');
             sections.forEach((section, i) => {
                 const container = section.querySelector('.container');
 
                 if (i > 0) {
-                    gsap.set(container, { rotation: revealRotationDeg });
+                    const rect = container.getBoundingClientRect();
+                    const containerDiagonal = Math.hypot(rect.width, rect.height) || viewportDiagonal;
+                    const fromDeg = Math.min(30, (tunedArc / containerDiagonal) * (180 / Math.PI));
+
+                    gsap.set(container, { rotation: fromDeg });
                     gsap.to(container, {
                         rotation: 0,
                         ease: 'none',
