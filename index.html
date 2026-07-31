@@ -874,19 +874,22 @@
             gsap.ticker.lagSmoothing(0);
 
             // Build the section pin + rotation animations
-            // ROOT CAUSE OF MOBILE BREAKAGE: the 30deg rotation pivots around the container's
-            // bottom-left corner. On wide/short desktop sections that sweep is subtle, but on
-            // narrow/tall mobile sections the same rotation swings the top edge far outside the
-            // section bounds, smearing the incoming section across the still-pinned previous one.
-            // Below the same 768px breakpoint used elsewhere in this file, skip the pin + rotate
-            // stacking effect entirely and let sections scroll normally in flow.
+            // The pin+stack transition (a section holds still while the next one slides up
+            // over it) is intentional on every viewport. What broke on mobile was the fixed
+            // 30deg rotation: below 768px the `.cols` rows (see that media query) stack to
+            // full width instead of sitting side-by-side, so sections run 2-3x taller than
+            // one viewport there. Rotating a box that tall by the same fixed angle around its
+            // bottom-left corner sweeps a proportionally huge arc, smearing the incoming
+            // section across the still-pinned previous one. Keep the effect everywhere, just
+            // use a much smaller angle on compact viewports so the sweep stays contained.
             const isCompactViewport = window.matchMedia('(max-width: 768px)').matches;
+            const revealRotationDeg = isCompactViewport ? 8 : 30;
             const sections = gsap.utils.toArray('section');
             sections.forEach((section, i) => {
                 const container = section.querySelector('.container');
 
-                if (i > 0 && !isCompactViewport) {
-                    gsap.set(container, { rotation: 30 });
+                if (i > 0) {
+                    gsap.set(container, { rotation: revealRotationDeg });
                     gsap.to(container, {
                         rotation: 0,
                         ease: 'none',
@@ -899,7 +902,7 @@
                     });
                 }
 
-                if (i < sections.length - 1 && !isCompactViewport) {
+                if (i < sections.length - 1) {
                     ScrollTrigger.create({
                         trigger: section,
                         start: 'bottom bottom',
